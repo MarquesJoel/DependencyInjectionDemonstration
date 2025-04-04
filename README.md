@@ -26,7 +26,7 @@ O **Root Scope** (ou **container root**) é criado **quando a aplicação inicia
 
 - Todos os serviços **Singleton** pertencem ao **Root Scope**.
 - Qualquer serviço registrado **fora de uma requisição HTTP** será resolvido dentro do **Root Scope**.
-- Se um serviço **Scoped ou Transient for resolvido no Root Scope**, ele **não será descartado automaticamente**, podendo causar vazamento de memória.
+- Se um serviço **Transient for resolvido no Root Scope**, ele **não será descartado automaticamente**, podendo causar vazamento de memória.
 
 ---
 
