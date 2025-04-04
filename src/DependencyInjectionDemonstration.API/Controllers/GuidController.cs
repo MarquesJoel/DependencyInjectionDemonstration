@@ -1,5 +1,5 @@
-using DependencyInjectionDemonstration.API.Services;
-using DependencyInjectionDemonstration.API.UseCases;
+using DependencyInjectionDemonstration.Core.Services;
+using DependencyInjectionDemonstration.Core.UseCases;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DependencyInjectionDemonstration.API.Controllers

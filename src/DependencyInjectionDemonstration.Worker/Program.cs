@@ -1,4 +1,4 @@
-using DependencyInjectionDemonstration.Worker.RegistersInjection;
+using DependencyInjectionDemonstration.Core.RegistersInjection;
 
 namespace DependencyInjectionDemonstration.Worker
 {

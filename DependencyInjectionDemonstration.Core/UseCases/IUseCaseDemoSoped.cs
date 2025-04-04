@@ -1,5 +1,5 @@
 ﻿
-namespace DependencyInjectionDemonstration.Worker.UseCases
+namespace DependencyInjectionDemonstration.Core.UseCases
 {
     public interface IUseCaseDemoSoped
     {

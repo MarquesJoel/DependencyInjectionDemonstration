@@ -1,5 +1,5 @@
 ﻿
-namespace DependencyInjectionDemonstration.Worker.Services
+namespace DependencyInjectionDemonstration.Core.Services
 {
     public interface IGuidServiceScoped
     {

@@ -1,5 +1,5 @@
 
-using DependencyInjectionDemonstration.API.RegistersInjection;
+using DependencyInjectionDemonstration.Core.RegistersInjection;
 
 namespace DependencyInjectionDemonstration.API
 {
