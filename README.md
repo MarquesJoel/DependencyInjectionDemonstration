@@ -16,18 +16,51 @@ Singleton:
 - ➤ Uma única instância é usada durante toda a vida da aplicação.
 - ➤ Use quando o serviço deve ser compartilhado e é thread-safe.
 ---
-## ♻️ O que é um serviço Scoped?
+# 🌍 Escopos no ASP.NET Core
 
-No ASP.NET Core, um serviço registrado como `Scoped` tem **um ciclo de vida por requisição HTTP**.
+No ASP.NET Core, os serviços registrados no container de injeção de dependência (DI) podem pertencer a diferentes escopos. Os principais são:
 
-Ou seja:
+## 🏠 1. Root Scope (Escopo Raiz)
 
-- Durante **uma requisição**, o container injeta **a mesma instância** do serviço sempre que ele for solicitado.
-- Em **outra requisição**, uma **nova instância** será criada.
+O **Root Scope** (ou **container root**) é criado **quando a aplicação inicia** e dura **até a aplicação ser encerrada**.
 
-### 📌 Exemplo prático:
+- Todos os serviços **Singleton** pertencem ao **Root Scope**.
+- Qualquer serviço registrado **fora de uma requisição HTTP** será resolvido dentro do **Root Scope**.
+- Se um serviço **Scoped ou Transient for resolvido no Root Scope**, ele **não será descartado automaticamente**, podendo causar vazamento de memória.
 
-Se você tiver um serviço com `Guid.NewGuid()` registrado como `Scoped`, ele vai gerar o **mesmo GUID durante toda a requisição**, mas um novo GUID em cada nova requisição.
+---
+
+## 🌍 2. Request Scope (Escopo de Requisição)
+
+No ASP.NET Core, **um novo escopo é criado automaticamente para cada requisição HTTP**.
+
+- Todos os serviços **Scoped** pertencem a este **Request Scope**.
+- Qualquer serviço **Transient** criado dentro da requisição **será descartado ao fim da requisição**.
+- **Cada requisição tem seu próprio escopo**, ou seja, serviços `Scoped` são **compartilhados dentro da mesma requisição**, mas **não entre requisições diferentes**.
+
+---
+
+## ⚠️ Problema: Injetar Scoped no Root Scope
+
+Se um **Singleton** depende de um serviço `Scoped`, ele estará tentando acessar algo que foi criado **dentro de um escopo que pode já ter sido descartado**, causando **comportamento inesperado** ou **erros de execução**.
+
+### ❌ Problema:
+- Um `Scoped` injetado diretamente em um `Singleton` pode ser descartado antes de ser utilizado.
+
+### ✅ Solução:
+- Sempre resolver serviços `Scoped` **dentro de um escopo válido**, por exemplo, criando um novo escopo manualmente (`CreateScope()`) dentro do método que precisa dele.
+
+---
+
+## 🎯 Resumo dos Escopos
+
+| **Tipo de Escopo**      | **Criado Quando?** | **Válido Até**  | **Exemplo de Serviços** |
+|------------------------|-------------------|----------------|------------------------|
+| **Root Scope** (Container Root) | Quando a aplicação inicia | Até o app ser encerrado | `Singletons` |
+| **Request Scope** (Escopo de Requisição) | Quando uma requisição HTTP começa | Até o fim da requisição | `Scoped`, `Transient` |
+
+> **Regra de Ouro:** Nunca injetar `Scoped` em `Singleton` diretamente!  
+> Sempre crie um escopo (`CreateScope()`) dentro do método que precisa dele.
 
 ---
 
