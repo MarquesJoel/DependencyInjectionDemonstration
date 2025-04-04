@@ -35,7 +35,7 @@ O **Root Scope** (ou **container root**) é criado **quando a aplicação inicia
 No ASP.NET Core, **um novo escopo é criado automaticamente para cada requisição HTTP**.
 
 - Todos os serviços **Scoped** pertencem a este **Request Scope**.
-- Qualquer serviço **Transient** criado dentro da requisição **será descartado ao fim da requisição**.
+- Qualquer serviço **Transient** e **Scoped** criado dentro da requisição **será descartado ao fim da requisição**.
 - **Cada requisição tem seu próprio escopo**, ou seja, serviços `Scoped` são **compartilhados dentro da mesma requisição**, mas **não entre requisições diferentes**.
 
 ---
